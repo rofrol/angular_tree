@@ -6,27 +6,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Test{
-  public static void main( String args[] ) {
-    List<AngularTree> list = new ArrayList<AngularTree>();
-    AngularTree at;
+  public static List<AngularTree> getAngularTree(List<AngularTree> list){
+    List<AngularTree> list2 = new ArrayList<AngularTree>();
     Map<Long, AngularTree> map = new HashMap<Long, AngularTree>();
 
-    at = new AngularTree(1,"Node1",false,new ArrayList<AngularTree>());
-    list.add(at); map.put(at.getId(), at);
-    at = new AngularTree(2,"Node2",false,new ArrayList<AngularTree>());
-    list.add(at); map.put(at.getId(), at);
-    at = new AngularTree(3,"Node3",false,new ArrayList<AngularTree>());
-    list.add(at); map.put(at.getId(), at);
+    for (AngularTree child : list) {
+      if(child.getParentId() != null && child.getParentId() > 0)
+        map.get(child.getParentId()).getChildren().add(child);
+      else 
+        list2.add(child);
+      map.put(child.getId(), child);
+    }
+    return list2;
+  }
 
-    at = new AngularTree(4,"Node4",false,new ArrayList<AngularTree>());
-    map.get(3L).getChildren().add(at); map.put(at.getId(), at);
-    at = new AngularTree(5,"Node5",false,new ArrayList<AngularTree>());
-    map.get(3L).getChildren().add(at); map.put(at.getId(), at);
+  public static void main( String args[] ) {
+    AngularTree at;
+    List<AngularTree> list = new ArrayList<AngularTree>();
 
-    for(int i = 0, len = list.size(); i < len; i++){
-      System.out.println(list.get(i).toString());
+    at = new AngularTree(1L,"Node1",false,new ArrayList<AngularTree>(),-1L); list.add(at);
+    at = new AngularTree(2L,"Node2",false,new ArrayList<AngularTree>(),-1L); list.add(at);
+    at = new AngularTree(3L,"Node3",false,new ArrayList<AngularTree>(),-1L); list.add(at);
+    at = new AngularTree(4L,"Node4",false,new ArrayList<AngularTree>(),3L); list.add(at);
+    at = new AngularTree(5L,"Node5",false,new ArrayList<AngularTree>(),3L); list.add(at);
+
+    for (AngularTree child : getAngularTree(list)) {
+      System.out.println(child);
     }
 
-    System.out.println(map);
+    //for (Map.Entry<Long, AngularTree> entry : map.entrySet()) {
+    //    System.out.println(entry.getKey() + "/" + entry.getValue());
+    //}
   }
 }

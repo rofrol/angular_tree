@@ -3,24 +3,31 @@ package com.transtech.npk.model;
 import java.util.List;
 
 public class AngularTree {
-  private long id;
+  private Long id;
+  private Long parentId;
   private String name;
   boolean checked;
   private List<AngularTree> children;
   public AngularTree(){};
-  public AngularTree(long id, String name, boolean checked,
-      List<AngularTree> children) {
+  public AngularTree(Long id, String name, boolean checked, List<AngularTree> children, Long parentId) {
     super();
     this.id = id;
     this.name = name;
     this.checked = checked;
     this.children = children;
+    this.parentId= parentId;
   }
-  public long getId() {
+  public Long getId() {
     return id;
   }
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
+  }
+  public Long getParentId() {
+    return parentId;
+  }
+  public void setParentId(Long parentId) {
+    this.parentId= parentId;
   }
   public String getName() {
     return name;
@@ -43,7 +50,6 @@ public class AngularTree {
   @Override
   public String toString() {
     return "[id=" + id + ", name=" + name + ", checked="
-        + checked + ", children=" + children + "]";
+        + checked + ", children=" + children + ", parentId=" + parentId+ "]";
   }
-  
 }
